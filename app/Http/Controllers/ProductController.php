@@ -28,6 +28,20 @@ class ProductController extends Controller
             'products' => $objects->paginate(20)
         ]);
     }
+    public function laptop(Request $request)
+    {
+        $objects = Product::where('status', true)->where('category_id', '=', 8)->where('city', 'kor');
+        return view('products.laptop', [
+            'products' => $objects->paginate(20)
+        ]);
+    }
+    public function vacuum(Request $request)
+    {
+        $objects = Product::where('status', true)->where('category_id', '=', 9)->where('city', 'kor');
+        return view('products.vacuum', [
+            'products' => $objects->paginate(20)
+        ]);
+    }
     public function favorite(Request $request)
     {
         $models = Auth::user()->favoritesProduct()->where('status', true);
@@ -39,6 +53,7 @@ class ProductController extends Controller
     public function saveParceProduct(Request $request)
     {
         $data = json_decode($request->post()[0], true);
+        //$data = $request->json()->all();
         $category_id = 0;
         foreach ($data as $item) {
             //$test = $item["figi"];

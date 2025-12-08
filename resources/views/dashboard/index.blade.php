@@ -8,12 +8,26 @@
 
 @section('content')
 <div class="row">
-    {{-- Очередь VK Anime --}}
+    {{-- Блок --}}
     <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
             <div class="inner">
                 <h3>{{ $all_favorite_product_count ?? 0 }}</h3>
                 <p>Продуктов в избранном</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-file-alt"></i>
+            </div>
+            <a href="" class="small-box-footer">
+                Подробнее <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{ $count_all_research_product ?? 0 }}</h3>
+                <p>Количетсво исследований</p>
             </div>
             <div class="icon">
                 <i class="fas fa-file-alt"></i>
