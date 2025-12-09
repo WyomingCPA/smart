@@ -42,6 +42,34 @@ class ProductController extends Controller
             'products' => $objects->paginate(20)
         ]);
     }
+    public function refrigerator(Request $request)
+    {
+        $objects = Product::where('status', true)->where('category_id', '=', 1)->where('city', 'kor');
+        return view('products.refrigerator', [
+            'products' => $objects->paginate(20)
+        ]);
+    }
+    public function tv32(Request $request)
+    {
+        $objects = Product::where('status', true)->where('category_id', '=', 6)->where('city', 'kor');
+        return view('products.tv32', [
+            'products' => $objects->paginate(20)
+        ]);
+    }
+    public function tv40(Request $request)
+    {
+        $objects = Product::where('status', true)->where('category_id', '=', 4)->where('city', 'kor');
+        return view('products.tv40', [
+            'products' => $objects->paginate(20)
+        ]);
+    }
+    public function tv50(Request $request)
+    {
+        $objects = Product::where('status', true)->where('category_id', '=', 5)->where('city', 'kor');
+        return view('products.tv50', [
+            'products' => $objects->paginate(20)
+        ]);
+    }
     public function favorite(Request $request)
     {
         $models = Auth::user()->favoritesProduct()->where('status', true);
