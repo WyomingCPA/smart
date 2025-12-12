@@ -72,7 +72,7 @@ class ProductController extends Controller
     }
     public function favorite(Request $request)
     {
-        $models = Auth::user()->favoritesProduct()->where('status', true);
+        $models = Auth::user()->favoritesProduct()->where('status', true)->orderBy('count_learn', 'asc');
 
         return view('products.favorite', [
             'products' => $models->paginate(20)
