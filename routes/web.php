@@ -28,7 +28,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('robot', 'ProductController@robotVacum');
     Route::get('vertical-vacum', 'ProductController@verticalVacuum');
     Route::get('favorite', [ProductController::class, 'favorite']);
-    Route::get('sales', 'ProductController@sales');
+    Route::get('sales', [ProductController::class, 'sales']);
     Route::get('changes', 'ProductController@changes');
     Route::post('set-learn', [ProductController::class, 'learn'])->name('product.learn');
     Route::post('set-favorite', [ProductController::class, 'setFavorite'])->name('product.set-favorite');

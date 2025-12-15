@@ -371,6 +371,11 @@ return [
             'url' => 'product/favorite',
             'icon' => 'fas fa-fw fa-lock',
         ],
+        [
+            'text' => 'Проданные',
+            'url' => 'product/sales',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
     ],
 
     /*

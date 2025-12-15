@@ -78,6 +78,18 @@ class ProductController extends Controller
             'products' => $models->paginate(20)
         ]);
     }
+    public function sales(Request $request)
+    {
+        $models = Product::where('status', false)->where('updated_at', '>=', Carbon::now()->subDays(7)->startOfDay())
+            ->where('city', 'kor')
+            ->orderBy('updated_at', 'desc');
+
+
+        return view('products.sales', [
+            'products' => $models->paginate(20)
+        ]);
+
+    }
     public function saveParceProduct(Request $request)
     {
         $data = json_decode($request->post()[0], true);
