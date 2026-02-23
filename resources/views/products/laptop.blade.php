@@ -7,6 +7,8 @@
 {{-- Content body: main page content --}}
 
 @section('content_body')
+{{-- Форма фильтра (GET) --}}
+<form method="GET" action="{{ route('product.laptop') }}" class="card card-body mb-3 shadow-sm"></form>
 <div class="row align-items-end">
 
     {{-- Цена от --}}
