@@ -8,76 +8,76 @@
 
 @section('content_body')
 {{-- Форма фильтра (GET) --}}
-<form method="GET" action="{{ route('product.laptop') }}" class="card card-body mb-3 shadow-sm"></form>
-<div class="row align-items-end">
+<form method="GET" action="{{ route('product.laptop') }}" class="card card-body mb-3 shadow-sm">
+    <div class="row align-items-end">
 
-    {{-- Цена от --}}
-    <div class="col-md-2">
-        <label class="form-label">Цена от</label>
-        <input type="number"
-            name="price_from"
-            class="form-control"
-            value="{{ request('price_from', $minPrice) }}"
-            min="{{ $minPrice }}"
-            max="{{ $maxPrice }}"
-            step="1">
-    </div>
-
-    {{-- Цена до --}}
-    <div class="col-md-2">
-        <label class="form-label">Цена до</label>
-        <input type="number"
-            name="price_to"
-            class="form-control"
-            value="{{ request('price_to', $maxPrice) }}"
-            min="{{ $minPrice }}"
-            max="{{ $maxPrice }}"
-            step="1">
-    </div>
-
-    {{-- Поиск --}}
-    <div class="col-md-3">
-        <label class="form-label">Модель</label>
-        <select name="search" class="form-control">
-            <option value="">Все товары</option>
-
-            <option value="Acer" {{ request('search') == 'Acer' ? 'selected' : '' }}>Acer</option>
-            <option value="Asus" {{ request('search') == 'Asus' ? 'selected' : '' }}>Asus</option>
-            <option value="MSI" {{ request('search') == 'MSI' ? 'selected' : '' }}>MSI</option>
-            <option value="LENOVO" {{ request('search') == 'LENOVO' ? 'selected' : '' }}>LENOVO</option>
-            <option value="CHUWI" {{ request('search') == 'CHUWI' ? 'selected' : '' }}>CHUWI</option>
-        </select>
-    </div>
-
-    {{-- Кнопки --}}
-    <div class="col-md-3 d-flex gap-2">
-        <button type="submit" class="btn btn-primary w-100">
-            <i class="fas fa-filter"></i> Фильтровать
-        </button>
-
-        <a href="{{ route('product.laptop') }}" class="btn btn-secondary w-100">
-            Сброс
-        </a>
-    </div>
-
-</div>
-<div class="row">
-    @foreach($tags as $tag)
-    <div class="col-md-3">
-        <div class="form-check">
-            <input class="form-check-input"
-                type="checkbox"
-                name="tags[]"
-                value="{{ $tag->id }}"
-                {{ in_array($tag->id, request('tags', [])) ? 'checked' : '' }}>
-
-            <label class="form-check-label">
-                {{ $tag->name }}
-            </label>
+        {{-- Цена от --}}
+        <div class="col-md-2">
+            <label class="form-label">Цена от</label>
+            <input type="number"
+                name="price_from"
+                class="form-control"
+                value="{{ request('price_from', $minPrice) }}"
+                min="{{ $minPrice }}"
+                max="{{ $maxPrice }}"
+                step="1">
         </div>
+
+        {{-- Цена до --}}
+        <div class="col-md-2">
+            <label class="form-label">Цена до</label>
+            <input type="number"
+                name="price_to"
+                class="form-control"
+                value="{{ request('price_to', $maxPrice) }}"
+                min="{{ $minPrice }}"
+                max="{{ $maxPrice }}"
+                step="1">
+        </div>
+
+        {{-- Поиск --}}
+        <div class="col-md-3">
+            <label class="form-label">Модель</label>
+            <select name="search" class="form-control">
+                <option value="">Все товары</option>
+
+                <option value="Acer" {{ request('search') == 'Acer' ? 'selected' : '' }}>Acer</option>
+                <option value="Asus" {{ request('search') == 'Asus' ? 'selected' : '' }}>Asus</option>
+                <option value="MSI" {{ request('search') == 'MSI' ? 'selected' : '' }}>MSI</option>
+                <option value="LENOVO" {{ request('search') == 'LENOVO' ? 'selected' : '' }}>LENOVO</option>
+                <option value="CHUWI" {{ request('search') == 'CHUWI' ? 'selected' : '' }}>CHUWI</option>
+            </select>
+        </div>
+
+        {{-- Кнопки --}}
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-filter"></i> Фильтровать
+            </button>
+
+            <a href="{{ route('product.laptop') }}" class="btn btn-secondary w-100">
+                Сброс
+            </a>
+        </div>
+
     </div>
-    @endforeach
-</div>
+    <div class="row">
+        @foreach($tags as $tag)
+        <div class="col-md-3">
+            <div class="form-check">
+                <input class="form-check-input"
+                    type="checkbox"
+                    name="tags[]"
+                    value="{{ $tag->id }}"
+                    {{ in_array($tag->id, request('tags', [])) ? 'checked' : '' }}>
+
+                <label class="form-check-label">
+                    {{ $tag->name }}
+                </label>
+            </div>
+        </div>
+        @endforeach
+    </div>
 </form>
 <form id="bulk-action-form" method="POST" action="">
     @csrf
