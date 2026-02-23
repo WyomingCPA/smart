@@ -85,7 +85,7 @@ class ProductController extends Controller
         $maxPrice = Product::where('status', 1)->max('price');
 
         $tags = Tag::all();
-        return view('products.smart', [
+        return view('products.laptop', [
             'products' => $query->paginate(20),
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
