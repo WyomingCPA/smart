@@ -42,10 +42,10 @@
             <select name="search" class="form-control">
                 <option value="">Все товары</option>
 
-                <option value="iPhone" {{ request('search') == 'iPhone' ? 'selected' : '' }}>iPhone</option>
+                <option value="Infinix" {{ request('search') == 'Infinix' ? 'selected' : '' }}>Infinix</option>
                 <option value="Samsung" {{ request('search') == 'Samsung' ? 'selected' : '' }}>Samsung</option>
                 <option value="Xiaomi" {{ request('search') == 'Xiaomi' ? 'selected' : '' }}>Xiaomi</option>
-                <option value="Pro" {{ request('search') == 'Pro' ? 'selected' : '' }}>Pro</option>
+                <option value="realme" {{ request('search') == 'realme' ? 'selected' : '' }}>realme</option>
             </select>
         </div>
 
@@ -147,11 +147,14 @@
             <div class="card-header">
                 <strong>Теги</strong>
             </div>
-        {{-- Пагинация --}}
-        <div class="card-footer">
-            {{ $products->links() }}
+            {{-- Пагинация --}}
+            <div class="card-footer">
+                {{ $products->links() }}
+            </div>
+            <div class="mb-3">
+                Найдено товаров: <strong>{{ $products->total() }}</strong>
+            </div>
         </div>
-    </div>
 </form>
 @stop
 

@@ -23,7 +23,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('tv40', [ProductController::class, 'tv40']);
     Route::get('tv50', [ProductController::class, 'tv50']);
     Route::get('smart', [ProductController::class, 'smart'])->name('product.smart');
-    Route::get('laptop', [ProductController::class, 'laptop']);
+    Route::get('laptop', [ProductController::class, 'laptop'])->name('product.laptop');
     Route::get('vacuum', [ProductController::class, 'vacuum']);
     Route::get('robot', 'ProductController@robotVacum');
     Route::get('vertical-vacum', 'ProductController@verticalVacuum');
