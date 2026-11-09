@@ -54,7 +54,7 @@ class ProductController extends Controller
                 ->where('category_id', 7)
                 ->where('city', 'kor');
         })->get();
-        
+
         return view('products.smart', [
             'products' => $query->paginate(20),
             'minPrice' => $minPrice,
@@ -89,7 +89,11 @@ class ProductController extends Controller
         $minPrice = Product::where('status', 1)->min('price');
         $maxPrice = Product::where('status', 1)->max('price');
 
-        $tags = Tag::all();
+        $tags = Tag::whereHas('products', function ($q) {
+            $q->where('status', true)
+                ->where('category_id', 8)
+                ->where('city', 'kor');
+        })->get();
         return view('products.laptop', [
             'products' => $query->paginate(20),
             'minPrice' => $minPrice,

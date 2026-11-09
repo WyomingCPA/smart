@@ -128,6 +128,17 @@
                                 <i class="fas fa-eye"></i> Детали
                             </a>
                         </td>
+                        <td>
+                            @if($product->is_favorite)
+                            <span class="badge badge-warning">
+                                <i class="fas fa-star"></i> В избранном
+                            </span>
+                            @else
+                            <span class="badge badge-secondary">
+                                Нет
+                            </span>
+                            @endif
+                        </td>
                     </tr>
                     <!-- Скрытая строка с деталями -->
                     <tr id="details-{{ $product->id }}" class="details-row" style="display:none;">
