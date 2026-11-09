@@ -106,6 +106,7 @@
                         <th>Price</th>
                         <th>Name</th>
                         <th>Count Learn</th>
+                        <th>Описание</th>
                         <th>Actions</th>
                         <th>Is Favorite</th>
                     </tr>
@@ -120,6 +121,13 @@
                         <td>{{ $product->price }}</td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->count_learn }}</td>
+                        <td>
+                            @if(!empty($product->description))
+                            <span class="badge badge-success">Есть</span>
+                            @else
+                            <span class="badge badge-secondary">Нет</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-pen"></i> Редактировать
