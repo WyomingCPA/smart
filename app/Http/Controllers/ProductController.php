@@ -16,10 +16,42 @@ class ProductController extends Controller
 {
     public function washmashine(Request $request)
     {
-        $objects = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor');
+        $query = Product::where('status', true)->where('category_id', '=', 2)->where('city', 'kor');
+        // Фильтр по цене
+        if ($request->filled('price_from')) {
+            $query->where('price', '>=', $request->price_from);
+        }
+
+        if ($request->filled('price_to')) {
+            $query->where('price', '<=', $request->price_to);
+        }
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Фильтр по тегам
+        if ($request->filled('tags')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->whereIn('tags.id', $request->tags);
+            });
+        }
+
+        // Получаем минимальную и максимальную цену из всей категории / таблицы
+        $minPrice = Product::where('status', 1)->min('price');
+        $maxPrice = Product::where('status', 1)->max('price');
+
+        $tags = Tag::whereHas('products', function ($q) {
+            $q->where('status', true)
+                ->where('category_id', 2)
+                ->where('city', 'kor');
+        })->get();
 
         return view('products.washmashine', [
-            'products' => $objects->paginate(20)
+            'products' => $query->paginate(20),
+            'minPrice' => $minPrice,
+            'maxPrice' => $maxPrice,
+            'tags' => $tags,
         ]);
     }
     public function smart(Request $request)

@@ -31,7 +31,7 @@
                 class="form-control"
                 value="{{ request('price_to', $maxPrice) }}"
                 min="{{ $minPrice }}"
-                max="{{ $maxPrice }}"
+                max="{{ $maxPrice + 30000 }}"
                 step="1">
         </div>
 

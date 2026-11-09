@@ -17,7 +17,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth:sanctum'], function
 });
 Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function () {
     Route::get('refrigerator', [ProductController::class, 'refrigerator']);
-    Route::get('washmashine', [ProductController::class, 'washmashine']);
+    Route::get('washmashine', [ProductController::class, 'washmashine'])->name('product.washmashine');
 
     Route::get('tv32', [ProductController::class, 'tv32']);
     Route::get('tv40', [ProductController::class, 'tv40']);
