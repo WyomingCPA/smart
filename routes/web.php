@@ -20,7 +20,7 @@ Route::group(['prefix' => 'product', 'middleware' => 'auth:sanctum'], function (
     Route::get('washmashine', [ProductController::class, 'washmashine'])->name('product.washmashine');
 
     Route::get('tv32', [ProductController::class, 'tv32']);
-    Route::get('tv40', [ProductController::class, 'tv40']);
+    Route::get('tv40', [ProductController::class, 'tv40'])->name('product.tv40');
     Route::get('tv50', [ProductController::class, 'tv50']);
     Route::get('smart', [ProductController::class, 'smart'])->name('product.smart');
     Route::get('laptop', [ProductController::class, 'laptop'])->name('product.laptop');

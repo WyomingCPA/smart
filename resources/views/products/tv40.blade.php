@@ -2,11 +2,85 @@
 
 {{-- Customize layout sections --}}
 
-@section('subtitle', 'ТВ 40 дюйма')
+@section('subtitle', 'ТВ 40')
+
+{{-- Content body: main page content --}}
 
 {{-- Content body: main page content --}}
 
 @section('content_body')
+{{-- Форма фильтра (GET) --}}
+<form method="GET" action="{{ route('product.tv40') }}" class="card card-body mb-3 shadow-sm">
+
+    <div class="row align-items-end">
+
+        {{-- Цена от --}}
+        <div class="col-md-2">
+            <label class="form-label">Цена от</label>
+            <input type="number"
+                name="price_from"
+                class="form-control"
+                value="{{ request('price_from', $minPrice) }}"
+                min="{{ $minPrice }}"
+                max="{{ $maxPrice }}"
+                step="1">
+        </div>
+
+        {{-- Цена до --}}
+        <div class="col-md-2">
+            <label class="form-label">Цена до</label>
+            <input type="number"
+                name="price_to"
+                class="form-control"
+                value="{{ request('price_to', $maxPrice) }}"
+                min="{{ $minPrice }}"
+                max="{{ $maxPrice + 30000 }}"
+                step="1">
+        </div>
+
+        {{-- Поиск --}}
+        <div class="col-md-3">
+            <label class="form-label">Модель</label>
+            <select name="search" class="form-control">
+                <option value="">Все товары</option>
+
+                <option value="Xiaomi" {{ request('search') == 'Xiaomi' ? 'selected' : '' }}>Xiaomi</option>
+                <option value="TCL" {{ request('search') == 'TCL' ? 'selected' : '' }}>TCL</option>
+                <option value="LG" {{ request('search') == 'LG' ? 'selected' : '' }}>LG</option>
+            </select>
+        </div>
+
+        {{-- Кнопки --}}
+        <div class="col-md-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-filter"></i> Фильтровать
+            </button>
+
+            <a href="{{ route('product.tv40') }}" class="btn btn-secondary w-100">
+                Сброс
+            </a>
+        </div>
+
+    </div>
+    <div class="row">
+        @foreach($tags as $tag)
+        <div class="col-md-3">
+            <div class="form-check">
+                <input class="form-check-input"
+                    type="checkbox"
+                    name="tags[]"
+                    value="{{ $tag->id }}"
+                    {{ in_array($tag->id, request('tags', [])) ? 'checked' : '' }}>
+
+                <label class="form-check-label">
+                    {{ $tag->name }}
+                </label>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</form>
+{{-- Форма массовых действий --}}
 <form id="bulk-action-form" method="POST" action="">
     @csrf
     <div class="card">
@@ -22,7 +96,6 @@
                 </button>
             </div>
         </div>
-
         <div class="card-body p-0">
             <table class="table table-dark table-striped">
                 <thead>
@@ -34,6 +107,7 @@
                         <th>Price</th>
                         <th>Name</th>
                         <th>Count Learn</th>
+                        <th>Описание</th>
                         <th>Actions</th>
                         <th>Is Favorite</th>
                     </tr>
@@ -49,12 +123,30 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->count_learn }}</td>
                         <td>
+                            @if(!empty($product->description))
+                            <span class="badge badge-success">Есть</span>
+                            @else
+                            <span class="badge badge-secondary">Нет</span>
+                            @endif
+                        </td>
+                        <td>
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-pen"></i> Редактировать
                             </a>
                             <a href="{{ route('products.detail', $product->id) }}" class="btn btn-sm btn-primary">
                                 <i class="fas fa-eye"></i> Детали
                             </a>
+                        </td>
+                        <td>
+                            @if($product->is_favorite)
+                            <span class="badge badge-warning">
+                                <i class="fas fa-star"></i> В избранном
+                            </span>
+                            @else
+                            <span class="badge badge-secondary">
+                                Нет
+                            </span>
+                            @endif
                         </td>
                     </tr>
                     <!-- Скрытая строка с деталями -->
@@ -71,11 +163,18 @@
                 </tbody>
             </table>
         </div>
-        {{-- Пагинация --}}
-        <div class="card-footer">
-            {{ $products->links() }}
+        <div class="card mt-3">
+            <div class="card-header">
+                <strong>Теги</strong>
+            </div>
+            {{-- Пагинация --}}
+            <div class="card-footer">
+                {{ $products->links() }}
+            </div>
+            <div class="mb-3">
+                Найдено товаров: <strong>{{ $products->total() }}</strong>
+            </div>
         </div>
-    </div>
 </form>
 @stop
 
@@ -131,7 +230,7 @@
         sendAction("{{ route('product.set-favorite') }}");
 
 
-        
+
     document.addEventListener("DOMContentLoaded", function() {
         document.querySelectorAll(".toggle-row").forEach(row => {
             row.addEventListener("click", function() {
